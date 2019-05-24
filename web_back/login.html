@@ -34,3 +34,34 @@
 </body>
 
 </html>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script>
+  $(function() {
+    $('.input_sub').click(function (e) { 
+      e.preventDefault()
+      var user_name = $('.input_txt').val().trim()
+      var password = $('.input_pass').val().trim()
+      if(user_name === '' || password === '') {
+        alert('用户名密码不能为空')
+        return false;
+      }
+
+      $.ajax({
+        url: 'https://autumnfish.cn/big/admin/login',
+        type: 'post',
+        data: {
+          user_name: user_name,
+          password: password
+        },
+        dataType: 'json',
+        success: function(backData){
+          if(backData.code === 400) {
+            alert('登录失败')
+          }else if(backData.code === 200) {
+            window.location.href = './index.html'
+          }
+        }
+      })
+     })
+  })
+</script>
