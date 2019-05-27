@@ -144,7 +144,7 @@
 
     $('.btn-leave').click(function () {
       $.ajax({
-        url: 'https://autumnfish.cn/big32/admin/logout',
+        url: 'http://localhost:8000/admin/logout',
         type: 'post',
         dataType: 'json',
         success: function (backData) {
@@ -156,7 +156,7 @@
     })
 
     $.ajax({
-      url:'https://autumnfish.cn/big32/admin/getuser',
+      url:'http://localhost:8000/admin/getuser',
       type: 'get',
       dataType: 'json',
       success: function(backData) {

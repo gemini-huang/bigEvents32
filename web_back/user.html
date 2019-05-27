@@ -71,7 +71,7 @@
 <script>
   $(function() {
     $.ajax({
-      url:'https://autumnfish.cn/big32/admin/userinfo_get',
+      url:'http://localhost:8000/admin/userinfo_get',
       type:'get',
       success: function(backDate) {
         for (const key in backDate.data) {
@@ -91,7 +91,7 @@
       e.preventDefault()
       var formData = new FormData($('form')[0])
       $.ajax({
-        url: 'https://autumnfish.cn/big32/admin/userinfo_edit',
+        url: 'http://localhost:8000/admin/userinfo_edit',
         type:'post',
         data: formData,
         contentType: false,

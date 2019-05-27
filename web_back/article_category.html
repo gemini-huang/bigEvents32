@@ -110,7 +110,7 @@
 <script>
   function getCategory() {
     $.ajax({
-      url: 'https://autumnfish.cn/big32/admin/category_search',
+      url: 'http://localhost:8000/admin/category_search',
       type: 'get',
       success: function (backData) {
         var html = template('category', backData)
@@ -123,7 +123,7 @@
 
   $('#model_add').click(function () {
     $.ajax({
-      url: 'https://autumnfish.cn/big32/admin/category_add',
+      url: 'http://localhost:8000/admin/category_add',
       type: 'post',
       data: {
         name: $('.name').val(),
