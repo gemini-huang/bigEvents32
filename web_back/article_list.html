@@ -85,7 +85,7 @@
 <script type="text/template" id="list">
   {{each data}}
   <tr>
-      <td data-id="{{totalPage}}">{{$value.title}}</td>
+      <td>{{$value.title}}</td>
       <td>{{$value.author}}</td>
       <td>{{$value.type}}</td>
       <td class="text-center">{{$value.date}}</td>
@@ -99,7 +99,30 @@
 </script>
 <script>
   $(function () {
+
+    var $pagination = $('.pagination')
+
     var mypage = 1;
+
+    // 总页数单独定义
+    var myTotalPage = 20
+    // 默认设置
+    var defaultOpts = {
+      totalPages: myTotalPage,
+      visiblePages: 5,
+      first: '第一页',
+      last: '最后一页',
+      prev: '上一页',
+      next: '下一页',
+      onPageClick: function (event, page) {
+        mypage = page
+        getArticle()
+      }
+    }
+
+    // 把设置传递给分页方法 并生效
+    $pagination.twbsPagination(defaultOpts)
+
     // 文章分类
     $.ajax({
       url: 'http://localhost:8000/admin/category_search',
@@ -124,6 +147,17 @@
         success: function (backData) {
           var html = template('list', backData)
           $('tbody').html(html)
+
+          if(myTotalPage !== backData.totalPage) {
+            myTotalPage = backData.totalPage
+
+            var currentPage = 1;
+            $pagination.twbsPagination('destroy');
+            $pagination.twbsPagination($.extend({}, defaultOpts, {
+                startPage: currentPage,
+                totalPages: myTotalPage
+            }));
+          }
         }
       })
     }
@@ -131,21 +165,22 @@
     getArticle()
 
 
-    $('.pagination').twbsPagination({
-      totalPages: 35,
-      visiblePages: 7,
-      first: '第一页',
-      last: '最后一页',
-      prev: '上一页',
-      next: '下一页',
-      onPageClick: function (event, page) {
-        // $('#page-content').text('Page ' + page);
-        mypage = page
-        getArticle()
-      }
-    });
+    // $pagination.twbsPagination({
+    //   totalPages: totalPages,
+    //   visiblePages: 5,
+    //   first: '第一页',
+    //   last: '最后一页',
+    //   prev: '上一页',
+    //   next: '下一页',
+    //   onPageClick: function (event, page) {
+    //     // $('#page-content').text('Page ' + page);
+    //     mypage = page
+    //     getArticle()
+    //   }
+    // });
 
-    $('#btnSearch').click(function() {
+    $('#btnSearch').click(function (e) {
+      e.preventDefault()
       getArticle()
     })
 
